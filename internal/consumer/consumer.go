@@ -3,7 +3,6 @@ package consumer
 import (
 	"context"
 	"log"
-
 	"github.com/segmentio/kafka-go"
 )
 

@@ -8,7 +8,6 @@ import (
     "rideshare-system/internal/utils"
     "rideshare-system/internal/models"
     "strconv"
-
     "github.com/gorilla/mux"
 )
 

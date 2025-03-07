@@ -164,7 +164,7 @@ Here were developed the main functions to react to the posts made to the servers
 
 ## Kafka
 
-This file writes and sends all the Kafka messages of any ride request or notifications, and sends a log to the terminal to check if it happened
+This file writes and sends all the Kafka messages of any ride request or notifications, and sends a log to the terminal to check if it happened. The Kafka server is running through a docker image.
 
 ## Models 
 

@@ -6,7 +6,6 @@ import (
     "math"
     "rideshare-system/internal/utils"
     "sync"
-
     _ "github.com/mattn/go-sqlite3"
 )
 

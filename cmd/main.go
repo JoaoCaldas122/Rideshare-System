@@ -6,7 +6,6 @@ import (
     "rideshare-system/internal/kafka"
     "rideshare-system/internal/models"
     "rideshare-system/internal/routes"
-
     "github.com/gorilla/mux"
 )
 
