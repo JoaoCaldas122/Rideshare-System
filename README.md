@@ -4,7 +4,7 @@ This is a simplified rideshare system that integrates Apache Kafka using Go for 
 
 ## Project Structure
 
-
+```
 rideshare-system
 ├── cmd
 │   └── main.go                # Entry point of the application
@@ -23,7 +23,7 @@ rideshare-system
 │       └── utils.go           # Utility functions for various operations
 ├── go.mod                      # Go module configuration file
 └── README.md                   # Project documentation and explanation
-
+```
 
 ## Setup Instructions
 
