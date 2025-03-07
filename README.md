@@ -28,20 +28,76 @@ rideshare-system
 ## Setup Instructions
 
 1. *Clone the repository:*
-   
-   git clone <repository-url>
+  ``` 
+   git clone https://github.com/JoaoCaldas122/task.git
    cd rideshare-system
-   
+  ``` 
 
 2. *Install dependencies:*
-   
+  ``` 
    go mod tidy
-   
+  ``` 
 
 3. *Run the application:*
-   
+  ``` 
    go run cmd/main.go
-   
+  ``` 
+
+4. *In a new terminal, add users:*
+  ``` 
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Alice",
+    "role": "rider",
+    "latitude": 37.7749,
+    "longitude": -122.4194
+  }'
+
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Bob",
+    "role": "rider",
+    "latitude": 34.0522,
+    "longitude": -118.2437
+  }'
+
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Charlie",
+    "role": "rider",
+    "latitude": 40.7128,
+    "longitude": -74.0060
+  }'
+
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Diana",
+    "role": "rider",
+    "latitude": 51.5074,
+    "longitude": -0.1278
+  }'
+
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Eve",
+    "role": "driver",
+    "latitude": 48.8566,
+    "longitude": 2.3522
+  }'
+
+  curl -X POST http://localhost:8080/users/register -H "Content-Type: application/json" -d '{
+    "name": "Frank",
+    "role": "driver",
+    "latitude": 35.6895,
+    "longitude": 139.6917
+  }'
+  ```
+
+5. *Make a ride request:*
+  ``` 
+   curl -X POST http://localhost:8080/rides/request -H "Content-Type: application/json" -d '{
+    "rider_id": 1,
+    "initial_latitude": 37.7749,
+    "initial_longitude": -122.4194,
+    "final_latitude": 37.7849,
+    "final_longitude": -122.4094
+  }'
+  ```
 
 ## API Usage
 
