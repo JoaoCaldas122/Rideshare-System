@@ -11,16 +11,16 @@ import (
 )
 
 func main() {
-    models.InitDB() // Initialize the database
+    models.InitDB()
 
-    brokerAddress := "localhost:9092" // Replace with your Kafka broker address
-    kafka.InitKafka(brokerAddress)    // Initialize Kafka
+    brokerAddress := "localhost:9092"
+    kafka.InitKafka(brokerAddress)
 
     router := mux.NewRouter()
-    routes.SetupRoutes(router) // Setup API routes
+    routes.SetupRoutes(router)
 
     log.Println("Server running on :8080")
     log.Fatal(http.ListenAndServe(":8080", router))
 
-    defer kafka.Close() // Ensure Kafka writer is closed properly
+    defer kafka.Close()
 }

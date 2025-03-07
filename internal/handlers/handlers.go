@@ -12,19 +12,19 @@ import (
     "github.com/gorilla/mux"
 )
 
-// RegisterUser handles user registration.
+
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
     var user models.User
     if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
-    models.AddUser(user) // Add user to the database
+    models.AddUser(user) 
     w.WriteHeader(http.StatusCreated)
     json.NewEncoder(w).Encode(user)
 }
 
-// UpdateDriverLocation handles updating the driver's location.
+
 func UpdateDriverLocation(w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
     driverID, _ := strconv.Atoi(vars["id"])
@@ -35,9 +35,9 @@ func UpdateDriverLocation(w http.ResponseWriter, r *http.Request) {
         return
     }
     driver.ID = driverID
-    models.UpdateUserLocation(driver) // Update driver's location in the database
+    models.UpdateUserLocation(driver) 
 
-    // Publish driver location update to Kafka
+    
     driverLocation, _ := json.Marshal(driver)
     if err := kafka.PublishDriverLocationUpdate(driverLocation); err != nil {
         log.Printf("Failed to publish driver location update: %v", err)
@@ -47,16 +47,16 @@ func UpdateDriverLocation(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(driver)
 }
 
-// RequestRide handles ride requests from users.
+
 func RequestRide(w http.ResponseWriter, r *http.Request) {
     var rideRequest models.RideRequest
     if err := json.NewDecoder(r.Body).Decode(&rideRequest); err != nil {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
-    models.AddRideRequest(rideRequest) // Add ride request to the database
+    models.AddRideRequest(rideRequest) 
 
-    // Publish ride request to Kafka
+    
     rideRequestMessage, _ := json.Marshal(rideRequest)
     if err := kafka.PublishRideRequest(rideRequestMessage); err != nil {
         log.Printf("Failed to publish ride request: %v", err)
@@ -86,24 +86,24 @@ func RequestRide(w http.ResponseWriter, r *http.Request) {
     driver.Longitude = rideRequest.InitialLon
     models.UpdateUserLocation(driver)
 
-    // Publish driver location update to Kafka
+    
     driverLocation, _ := json.Marshal(driver)
     if err := kafka.PublishDriverLocationUpdate(driverLocation); err != nil {
         log.Printf("Failed to publish driver location update: %v", err)
     }
 
-    // Simulate the ride completion by updating the driver's location to the final location
+    
     driver.Latitude = rideRequest.FinalLat
     driver.Longitude = rideRequest.FinalLon
     models.UpdateUserLocation(driver)
 
-    // Publish driver location update to Kafka
+    
     driverLocation, _ = json.Marshal(driver)
     if err := kafka.PublishDriverLocationUpdate(driverLocation); err != nil {
         log.Printf("Failed to publish driver location update: %v", err)
     }
 
-    // Update rider's location to the final location
+    
     rider := models.User{
         ID:        rideRequest.RiderID,
         Latitude:  rideRequest.FinalLat,
@@ -115,7 +115,7 @@ func RequestRide(w http.ResponseWriter, r *http.Request) {
     ride.Status = "completed"
     models.UpdateRide(ride)
 
-    // Publish ride completion notification to Kafka
+    
     rideCompletionMessage, _ := json.Marshal(ride)
     if err := kafka.PublishNotification(rideCompletionMessage); err != nil {
         log.Printf("Failed to publish ride completion notification: %v", err)
@@ -125,7 +125,7 @@ func RequestRide(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(ride)
 }
 
-// FindNearestDriver handles finding the nearest driver for a ride request and logs the action.
+
 func FindNearestDriver(w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
     rideRequestID, _ := strconv.Atoi(vars["rideRequestId"])
